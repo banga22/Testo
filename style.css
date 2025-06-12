@@ -167,3 +167,36 @@ footer p {
         margin-top: 15px;
     }
 }
+
+/* Добавьте в конец файла style.css */
+.order-section {
+    text-align: center;
+    margin: 50px 0;
+    padding: 30px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+}
+
+.order-section h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.order-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(37, 117, 252, 0.3);
+}
+
+.order-btn:hover {
+    background: linear-gradient(to right, #2575fc, #6a11cb);
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(37, 117, 252, 0.4);
+}
