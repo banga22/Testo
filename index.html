@@ -3,48 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Форма обратной связи</title>
+    <title>Лучшие исполнители</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Форма заказа</h1>
-        <form id="feedbackForm">
-            <div class="form-group">
-                <label for="name">Имя:</label>
-                <input type="text" id="name" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="email">Почта Mail.ru:</label>
-                <input type="email" id="email" title="Используйте почту @mail">
-            </div>
-            
-            <div class="form-group">
-                <label for="phone">Номер телефона:</label>
-                <input type="tel" id="phone" required pattern="\+?[0-9\s\-\(\)]+" title="Пример: +79991234567">
-            </div>
-            
-            <div class="form-group">
-                <label for="service">Услуга:</label>
-                <select id="service" required>
-                    <option value="">Выберите услугу</option>
-                    <option value="Создание модели">Создание модели</option>
-                    <option value="Нарисовать текстуры">Нарисовать текстуры</option>
-                    <option value="Выполнить ретопологию">Выполнить ретопологию</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="description">Описание:</label>
-                <textarea id="description" rows="4" required></textarea>
-            </div>
-            
-            <button type="submit">Отправить</button>
-        </form>
-        <div id="message"></div>
-    </div>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="container">
+            <h1>Лучшие исполнители у нас</h1>
+            <p>Найдите профессионала для вашего проекта</p>
+        </div>
+    </header>
 
-    <script src="script.js"></script>
+    <!-- Главный контент -->
+    <main class="container">
+        <section class="executors">
+            <!-- Карточка исполнителя 1 -->
+            <div class="executor-card">
+                <div class="executor-header">
+                    <img src="https://via.placeholder.com/100" alt="Алексей Иванов">
+                    <div class="executor-info">
+                        <h2>Алексей Иванов</h2>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.8</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="executor-description">Специалист по 3D моделированию с 7-летним опытом. Работал над проектами для крупных игровых студий.</p>
+                <button class="btn-details" onclick="openExecutorPage(1)">Узнать подробнее</button>
+            </div>
+
+            <!-- Карточка исполнителя 2 -->
+            <div class="executor-card">
+                <div class="executor-header">
+                    <img src="https://via.placeholder.com/100" alt="Мария Петрова">
+                    <div class="executor-info">
+                        <h2>Мария Петрова</h2>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>5.0</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="executor-description">Эксперт по текстурированию и материаловедению. Создаю реалистичные текстуры для любых объектов.</p>
+                <button class="btn-details" onclick="openExecutorPage(2)">Узнать подробнее</button>
+            </div>
+
+            <!-- Карточка исполнителя 3 -->
+            <div class="executor-card">
+                <div class="executor-header">
+                    <img src="https://via.placeholder.com/100" alt="Дмитрий Сидоров">
+                    <div class="executor-info">
+                        <h2>Дмитрий Сидоров</h2>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>4.2</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="executor-description">Профессионал в области ретопологии и оптимизации 3D моделей. Специализируюсь на подготовке моделей для игр.</p>
+                <button class="btn-details" onclick="openExecutorPage(3)">Узнать подробнее</button>
+            </div>
+
+            <!-- Карточка исполнителя 4 -->
+            <div class="executor-card">
+                <div class="executor-header">
+                    <img src="https://via.placeholder.com/100" alt="Екатерина Волкова">
+                    <div class="executor-info">
+                        <h2>Екатерина Волкова</h2>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>5.0</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="executor-description">Художник по персонажам и окружению. Создаю уникальные стилизованные модели с нуля.</p>
+                <button class="btn-details" onclick="openExecutorPage(4)">Узнать подробнее</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал сайта -->
+    <footer>
+        <div class="container">
+            <p>© 2023 Лучшие исполнители. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Функция для перехода на страницу исполнителя
+        function openExecutorPage(id) {
+            // Временная заглушка - позже заменим на реальную страницу
+            alert(`Открывается страница исполнителя с ID: ${id}\nЭтот функционал будет реализован позже`);
+            // Реальный код для перехода:
+            // window.location.href = `executor.html?id=${id}`;
+        }
+    </script>
 </body>
 </html>
