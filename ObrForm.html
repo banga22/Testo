@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Форма заказа</title>
+    <title>Форма заказа услуги</title>
     <link rel="stylesheet" href="ObrForm.css">
 </head>
 <body>
     <div class="container">
         <h1>Форма заказа услуги</h1>
         <form id="feedbackForm">
+            <div class="form-group">
+                <label for="executor">Выберите исполнителя:</label>
+                <select id="executor" required>
+                    <option value="">-- Выберите исполнителя --</option>
+                    <option value="1257092596">Алексей Иванов (3D моделирование)</option>
+                    <option value="1106493429">Мария Петрова (Текстурирование)</option>
+                    <option value="1106493429">Дмитрий Сидоров (Ретопология)</option>
+                    <option value="1257092596">Екатерина Волкова (Персонажи)</option>
+                </select>
+            </div>
+            
             <div class="form-group">
                 <label for="name">Ваше имя:</label>
                 <input type="text" id="name" required>
@@ -26,7 +37,7 @@
             </div>
             
             <div class="form-group">
-                <label for="telegram">Ваш Telegram аккаунт:</label>
+                <label for="telegram">Ваш Telegram:</label>
                 <input type="text" id="telegram" required placeholder="@username">
             </div>
             
