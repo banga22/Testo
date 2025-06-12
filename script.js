@@ -6,18 +6,30 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
         phone: document.getElementById('phone').value,
+        telegram: document.getElementById('telegram').value,
         service: document.getElementById('service').value,
         description: document.getElementById('description').value
     };
     
+    // Проверка Telegram аккаунта
+    if (!formData.telegram.startsWith('@')) {
+        formData.telegram = '@' + formData.telegram;
+    }
+    
     // Форматирование сообщения для Telegram
     const message = `
-        📌 Новая заявка:
-        👤 Имя: ${formData.name}
-        ✉️ Почта: ${formData.email}
-        📱 Телефон: ${formData.phone}
-        🛠 Услуга: ${formData.service}
-        📝 Описание: ${formData.description}
+        🚀 <b>Новый заказ!</b>
+        
+        👤 <b>Имя:</b> ${formData.name}
+        📧 <b>Почта:</b> ${formData.email}
+        📱 <b>Телефон:</b> ${formData.phone}
+        ✈️ <b>Telegram:</b> ${formData.telegram}
+        
+        🛠️ <b>Услуга:</b> ${formData.service}
+        📝 <b>Описание:</b>
+        ${formData.description}
+        
+        ⏱️ <i>${new Date().toLocaleString('ru-RU')}</i>
     `;
     
     // Настройки бота Telegram
@@ -40,7 +52,7 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
     .then(data => {
         const messageDiv = document.getElementById('message');
         if (data.ok) {
-            messageDiv.textContent = '✅ Данные успешно отправлены!';
+            messageDiv.textContent = '✅ Заявка успешно отправлена! С вами свяжутся в Telegram';
             messageDiv.className = 'success';
             document.getElementById('feedbackForm').reset();
         } else {
@@ -57,7 +69,7 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
     .catch(error => {
         console.error('Ошибка:', error);
         const messageDiv = document.getElementById('message');
-        messageDiv.textContent = '🚫 Произошла ошибка при отправке';
+        messageDiv.textContent = '🚫 Произошла ошибка при отправке заявки';
         messageDiv.className = 'error';
     });
 });
