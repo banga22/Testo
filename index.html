@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма обратной связи</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Форма заказа</h1>
+        <form id="feedbackForm">
+            <div class="form-group">
+                <label for="name">Имя:</label>
+                <input type="text" id="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Почта Mail.ru:</label>
+                <input type="email" id="email" required pattern=".*@mail\.ru$" title="Используйте почту @mail.ru">
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Номер телефона:</label>
+                <input type="tel" id="phone" required pattern="\+?[0-9\s\-\(\)]+" title="Пример: +79991234567">
+            </div>
+            
+            <div class="form-group">
+                <label for="service">Услуга:</label>
+                <select id="service" required>
+                    <option value="">Выберите услугу</option>
+                    <option value="Создание модели">Создание модели</option>
+                    <option value="Нарисовать текстуры">Нарисовать текстуры</option>
+                    <option value="Выполнить ретопологию">Выполнить ретопологию</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Описание:</label>
+                <textarea id="description" rows="4" required></textarea>
+            </div>
+            
+            <button type="submit">Отправить</button>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
