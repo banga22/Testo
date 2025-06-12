@@ -1,8 +1,14 @@
 document.getElementById('feedbackForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
+    // Получаем выбранного исполнителя
+    const executorSelect = document.getElementById('executor');
+    const executorId = executorSelect.value;
+    const executorName = executorSelect.options[executorSelect.selectedIndex].text;
+    
     // Сбор данных формы
     const formData = {
+        executor: executorName,
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
         phone: document.getElementById('phone').value,
@@ -18,32 +24,28 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
     
     // Форматирование сообщения для Telegram
     const message = `
-        🚀 <b>Новый заказ!</b>
+        🚀 <b>Новый заказ для ${formData.executor.split(' (')[0]}!</b>
         
-        👤 <b>Имя:</b> ${formData.name}
+        👤 <b>Клиент:</b> ${formData.name}
         📧 <b>Почта:</b> ${formData.email}
         📱 <b>Телефон:</b> ${formData.phone}
-        ✈️ <b>Telegram:</b> ${formData.telegram}
-        
+        ✈️ <b>Telegram:</b> ${formData.telegram}     
         🛠️ <b>Услуга:</b> ${formData.service}
-        📝 <b>Описание:</b>
-        ${formData.description}
-        
+        📝 <b>Описание:</b> ${formData.description}
         ⏱️ <i>${new Date().toLocaleString('ru-RU')}</i>
     `;
     
     // Настройки бота Telegram
     const botToken = '7871514395:AAEKXYC0n8rbfPaWmIuYjstEkf7psDgN1tQ';
-    const chatId = '1257092596';
     
-    // Отправка данных через Telegram API
+    // Отправка данных через Telegram API выбранному исполнителю
     fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            chat_id: chatId,
+            chat_id: executorId,
             text: message,
             parse_mode: 'HTML'
         })
@@ -52,7 +54,7 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
     .then(data => {
         const messageDiv = document.getElementById('message');
         if (data.ok) {
-            messageDiv.textContent = '✅ Заявка успешно отправлена! С вами свяжутся в Telegram';
+            messageDiv.textContent = `✅ Заявка отправлена ${formData.executor.split(' (')[0]}!`;
             messageDiv.className = 'success';
             document.getElementById('feedbackForm').reset();
         } else {
