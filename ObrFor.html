@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма заказа</title>
+    <link rel="stylesheet" href="ObrForm.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Форма заказа услуги</h1>
+        <form id="feedbackForm">
+            <div class="form-group">
+                <label for="name">Ваше имя:</label>
+                <input type="text" id="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Почта Mail.ru:</label>
+                <input type="email" id="email" required pattern=".*@mail\.ru$" title="Используйте почту @mail.ru">
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Номер телефона:</label>
+                <input type="tel" id="phone" required pattern="\+?[0-9\s\-\(\)]+" title="Пример: +79991234567">
+            </div>
+            
+            <div class="form-group">
+                <label for="telegram">Ваш Telegram аккаунт:</label>
+                <input type="text" id="telegram" required placeholder="@username">
+            </div>
+            
+            <div class="form-group">
+                <label for="service">Требуемая услуга:</label>
+                <select id="service" required>
+                    <option value="">Выберите услугу</option>
+                    <option value="Создание модели">Создание модели</option>
+                    <option value="Нарисовать текстуры">Нарисовать текстуры</option>
+                    <option value="Выполнить ретопологию">Выполнить ретопологию</option>
+                    <option value="Анимация модели">Анимация модели</option>
+                    <option value="Оптимизация для игр">Оптимизация для игр</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Описание проекта:</label>
+                <textarea id="description" rows="5" required placeholder="Опишите детали вашего проекта, требования и сроки..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="files">Прикрепить файлы (опционально):</label>
+                <input type="file" id="files" multiple>
+            </div>
+            
+            <button type="submit">Отправить заявку</button>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
