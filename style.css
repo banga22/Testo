@@ -254,3 +254,19 @@ footer p {
         width: 95%;
     }
 }
+
+/* Добавьте в конец файла */
+
+/* Стили для поля Telegram */
+#telegramSource {
+    display: block;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+/* Иконка подтверждения */
+.telegram-verified {
+    color: #28a745;
+    margin-left: 5px;
+}
