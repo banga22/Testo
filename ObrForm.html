@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -8,10 +8,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- Кнопка которая возвращает нам назад на главную страницу -->
-        <a href="index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i> Вернуться к исполнителям
-        </a>
         <h1>Форма заказа услуги</h1>
         <form id="feedbackForm">
             <div class="form-group">
@@ -21,7 +17,7 @@
                     <option value="1257092596">Алексей Иванов (3D моделирование)</option>
                     <option value="1106493429">Мария Петрова (Текстурирование)</option>
                     <option value="1106493429">Дмитрий Сидоров (Ретопология)</option>
-                    <option value="1257092596">Михаил Литвинов (Персонажи)</option>
+                    <option value="1257092596">Екатерина Волкова (Персонажи)</option>
                 </select>
             </div>
             
@@ -32,7 +28,7 @@
             
             <div class="form-group">
                 <label for="email">Почта Mail.ru:</label>
-                <input type="email" id="email" required pattern=".*@(mail\.ru|gmail\.com)$" title="Используйте почту @mail.ru или @gmail.com">
+                <input type="email" id="email" required pattern=".*@mail\.ru$" title="Используйте почту @mail.ru">
             </div>
             
             <div class="form-group">
@@ -41,8 +37,8 @@
             </div>
             
             <div class="form-group">
-                <label for="telegram">Telegram:</label>
-                <input  type="text" id="telegram" >
+                <label for="telegram">Ваш Telegram:</label>
+                <input type="text" id="telegram" required placeholder="@username">
             </div>
             
             <div class="form-group">
