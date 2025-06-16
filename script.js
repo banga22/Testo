@@ -1,3 +1,42 @@
+document.addEventListener('DOMContentLoaded', function() {
+    // Проверяем, открыто ли приложение в Telegram
+    const isTelegram = window.Telegram && Telegram.WebApp;
+    const telegramField = document.getElementById('telegram');
+    
+    if (isTelegram) {
+        // Инициализируем WebApp
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+        
+        // Получаем данные пользователя
+        const tgUser = Telegram.WebApp.initDataUnsafe?.user;
+        
+        if (tgUser) {
+            // Заполняем имя
+            document.getElementById('name').value = tgUser.first_name || '';
+            
+            // Заполняем поле Telegram
+            if (tgUser.username) {
+                telegramField.value = `@${tgUser.username}`;
+            } else {
+                // Если username отсутствует, показываем инструкцию
+                telegramField.placeholder = 'У вас нет @username. Введите контакт вручную';
+                telegramField.readOnly = false;
+                showMessage('❌ У вас не установлен username в Telegram. Пожалуйста, укажите контакт вручную.', 'error', 5000);
+            }
+        } else {
+            // Если данные пользователя недоступны
+            telegramField.readOnly = false;
+            telegramField.placeholder = 'Введите ваш @username или телефон';
+            showMessage('⚠️ Не удалось получить данные Telegram. Заполните поле вручную.', 'error', 5000);
+        }
+    } else {
+        // Если открыто в обычном браузере
+        telegramField.readOnly = false;
+        telegramField.placeholder = 'Ваш @username в Telegram';
+    }
+});
+
 document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
@@ -8,24 +47,6 @@ document.getElementById('feedbackForm').addEventListener('submit', async functio
     submitBtn.textContent = 'Отправка...';
     
     try {
-        // Проверка контекста Telegram
-        let tgUser = null;
-        const isTelegram = window.Telegram && Telegram.WebApp;
-        
-        if (isTelegram) {
-            tgUser = Telegram.WebApp.initDataUnsafe.user;
-            
-            if (tgUser) {
-                // Автозаполнение данных
-                document.getElementById('name').value = tgUser.first_name || '';
-                
-                // Заполняем Telegram только если username существует
-                if (tgUser.username) {
-                    document.getElementById('telegram').value = `@${tgUser.username}`;
-                }
-            }
-        }
-        
         // Получение данных формы
         const executorSelect = document.getElementById('executor');
         const executorId = executorSelect.value;
@@ -39,16 +60,16 @@ document.getElementById('feedbackForm').addEventListener('submit', async functio
         const service = document.getElementById('service').value;
         const description = document.getElementById('description').value.trim();
         
+        // Проверка обязательных полей
         if (!executorId || !name || !email || !phone || !telegram || !service || !description) {
             showMessage('❌ Заполните все обязательные поля!', 'error', 3000);
             return;
         }
         
         // Нормализация Telegram username
-        if (telegram.startsWith('@')) {
-            telegram = telegram.substring(1); // Убираем существующий "@"
+        if (!telegram.startsWith('@') && !telegram.startsWith('+')) {
+            telegram = '@' + telegram;
         }
-        telegram = '@' + telegram; // Добавляем "@" в начало
         
         // Форматирование сообщения
         const message = `
@@ -87,7 +108,7 @@ ${description}
             document.getElementById('feedbackForm').reset();
             
             // Закрыть веб-приложение, если открыто в Telegram
-            if (isTelegram && Telegram.WebApp.close) {
+            if (window.Telegram && Telegram.WebApp && Telegram.WebApp.close) {
                 setTimeout(() => Telegram.WebApp.close(), 2000);
             }
         } else {
@@ -115,11 +136,4 @@ function showMessage(text, className, timeout = 5000) {
             messageDiv.className = '';
         }, timeout);
     }
-}
-
-// Если не в Telegram, разрешаем редактирование поля Telegram
-if (!(window.Telegram && Telegram.WebApp)) {
-    const telegramField = document.getElementById('telegram');
-    telegramField.readOnly = false;
-    telegramField.placeholder = 'Ваш @username в Telegram';
 }
