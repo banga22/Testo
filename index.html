@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Запись к мастеру</title>
+    <title>Лучшие исполнители</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Шапка сайта -->
     <header>
         <div class="container">
-            <h1>Лучшие исполнители</h1>
-            <p>Запишитесь к проверенным специалистам</p>
+            <h1>Лучшие исполнители у нас</h1>
+            <p>Найдите профессионала для вашего проекта</p>
         </div>
     </header>
 
+    <!-- Главный контент -->
     <main class="container">
         <section class="executors">
             <!-- Алексей Иванов -->
@@ -24,15 +26,19 @@
                     <div class="executor-info">
                         <h2>Алексей Иванов</h2>
                         <div class="rating">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
                             <span>4.8</span>
                         </div>
                     </div>
                 </div>
-                <p>Специалист по 3D моделированию с 7-летним опытом</p>
-                <button class="btn-book" data-tg-id="1257092596" data-name="Алексей Иванов">Записаться</button>
+                <p class="executor-description">Специалист по 3D моделированию с 7-летним опытом. Работал над проектами для крупных игровых студий.</p>
+                <button class="btn-details" data-executor-id="1257092596" data-executor-name="Алексей Иванов">Записаться</button>
             </div>
-
+            
             <!-- Мария Петрова -->
             <div class="executor-card">
                 <div class="executor-header">
@@ -40,41 +46,54 @@
                     <div class="executor-info">
                         <h2>Мария Петрова</h2>
                         <div class="rating">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                             <span>5.0</span>
                         </div>
                     </div>
                 </div>
-                <p>Эксперт по текстурированию и материаловедению</p>
-                <button class="btn-book" data-tg-id="1106493429" data-name="Мария Петрова">Записаться</button>
+                <p class="executor-description">Эксперт по текстурированию и материаловедению. Создаю реалистичные текстуры для любых объектов.</p>
+                <button class="btn-details" data-executor-id="1106493429" data-executor-name="Мария Петрова">Записаться</button>
             </div>
-
-            <!-- Дмитрий Сидоров -->
+            
+            <!-- Новый исполнитель: Дмитрий Сидоров -->
             <div class="executor-card">
                 <div class="executor-header">
                     <img src="https://via.placeholder.com/100" alt="Дмитрий Сидоров">
                     <div class="executor-info">
                         <h2>Дмитрий Сидоров</h2>
                         <div class="rating">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
                             <span>4.2</span>
                         </div>
                     </div>
                 </div>
-                <p>Специалист по ретопологии и оптимизации моделей</p>
-                <button class="btn-book" data-tg-id="5555555555" data-name="Дмитрий Сидоров">Записаться</button>
+                <p class="executor-description">Профессионал в области ретопологии и оптимизации 3D моделей. Специализируюсь на подготовке моделей для игр.</p>
+                <button class="btn-details" data-executor-id="5555555555" data-executor-name="Дмитрий Сидоров">Записаться</button>
             </div>
         </section>
+        
+        <!-- Кнопка вызова формы -->
+        <div class="order-section">
+            <button id="openFormBtn" class="order-btn">Записаться к мастеру</button>
+        </div>
     </main>
 
-    <!-- Модальное окно -->
+    <!-- Модальное окно формы -->
     <div id="bookingModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close-btn">&times;</span>
             <h2>Запись к мастеру</h2>
             <form id="bookingForm">
-                <input type="hidden" id="masterId">
-                <input type="hidden" id="masterName">
+                <input type="hidden" id="selectedExecutorId">
+                <input type="hidden" id="selectedExecutorName">
                 
                 <div class="form-group">
                     <label for="clientName">Ваше имя:</label>
@@ -83,23 +102,30 @@
                 
                 <div class="form-group">
                     <label for="clientPhone">Телефон:</label>
-                    <input type="tel" id="clientPhone" required>
+                    <input type="tel" id="clientPhone" required pattern="\+?[0-9\s\-\(\)]+">
                 </div>
                 
                 <div class="form-group">
-                    <label for="clientTg">Telegram:</label>
-                    <input type="text" id="clientTg" readonly>
-                    <small id="tgSource" class="tg-source"></small>
+                    <label for="clientTelegram">Telegram:</label>
+                    <input type="text" id="clientTelegram" placeholder="Определится автоматически" readonly>
+                    <small id="telegramSource"></small>
                 </div>
                 
                 <div class="form-group">
-                    <label for="service">Услуга:</label>
-                    <select id="service" required>
+                    <label for="serviceType">Услуга:</label>
+                    <select id="serviceType" required>
                         <option value="">Выберите услугу</option>
-                        <option value="3D моделирование">3D моделирование</option>
+                        <option value="Создание модели">Создание модели</option>
                         <option value="Текстурирование">Текстурирование</option>
                         <option value="Ретопология">Ретопология</option>
+                        <option value="Анимация">Анимация</option>
+                        <option value="Оптимизация">Оптимизация</option>
                     </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bookingNotes">Дополнительные пожелания:</label>
+                    <textarea id="bookingNotes" rows="3"></textarea>
                 </div>
                 
                 <button type="submit">Отправить запрос</button>
@@ -108,11 +134,12 @@
         </div>
     </div>
 
-    <div id="tgAlert" class="tg-alert">
-        <p>Для автоматического заполнения данных откройте в Telegram!</p>
-        <a href="https://t.me/ваш_бот" class="tg-alert-btn">Открыть в боте</a>
-        <button class="tg-alert-close">×</button>
-    </div>
+    <!-- Подвал сайта -->
+    <footer>
+        <div class="container">
+            <p>© 2023 Лучшие исполнители. Все права защищены.</p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
