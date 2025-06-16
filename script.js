@@ -1,129 +1,106 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Проверяем, открыто ли приложение в Telegram
-    const isTelegram = window.Telegram && Telegram.WebApp;
-    const telegramField = document.getElementById('telegram');
-    
-    if (isTelegram) {
-        // Инициализируем WebApp
-        Telegram.WebApp.ready();
-        Telegram.WebApp.expand();
-        
-        // Получаем данные пользователя
-        const tgUser = Telegram.WebApp.initDataUnsafe?.user;
-        
-        if (tgUser) {
-            // Заполняем имя
-            document.getElementById('name').value = tgUser.first_name || '';
-            
-            // Заполняем поле Telegram
-            if (tgUser.username) {
-                telegramField.value = `@${tgUser.username}`;
-            } else {
-                // Если username отсутствует, используем user ID
-                telegramField.value = `user_${tgUser.id}`;
-            }
-        } else {
-            // Если данные пользователя недоступны
-            telegramField.value = "Не удалось получить данные";
-        }
-        
-        // Делаем поле нередактируемым и меняем стиль
-        telegramField.readOnly = true;
-        telegramField.classList.add('telegram-auto');
-    } else {
-        // Если открыто в обычном браузере
-        telegramField.value = "Откройте в Telegram";
-        telegramField.readOnly = true;
-        telegramField.classList.add('telegram-auto');
+// Элементы DOM
+const modal = document.getElementById('bookingModal');
+const openFormBtn = document.getElementById('openFormBtn');
+const closeBtn = document.querySelector('.close-btn');
+const bookingForm = document.getElementById('bookingForm');
+const formMessage = document.getElementById('formMessage');
+const executorIdInput = document.getElementById('selectedExecutorId');
+const executorNameInput = document.getElementById('selectedExecutorName');
+
+// Открытие модального окна
+function openModal(executorId = '', executorName = '') {
+    executorIdInput.value = executorId;
+    executorNameInput.value = executorName;
+    modal.style.display = "block";
+    document.body.style.overflow = "hidden"; // Блокируем скролл страницы
+}
+
+// Закрытие модального окна
+function closeModal() {
+    modal.style.display = "none";
+    document.body.style.overflow = "auto"; // Восстанавливаем скролл
+    bookingForm.reset();
+    formMessage.textContent = '';
+}
+
+// Обработчики событий
+openFormBtn.addEventListener('click', () => openModal());
+closeBtn.addEventListener('click', closeModal);
+
+// Закрытие при клике вне модалки
+window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        closeModal();
     }
 });
 
-document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
+// Обработка кнопок "Записаться" в карточках
+document.querySelectorAll('.btn-details').forEach(button => {
+    button.addEventListener('click', () => {
+        const executorId = button.getAttribute('data-executor-id');
+        const executorName = button.getAttribute('data-executor-name');
+        openModal(executorId, executorName);
+    });
+});
+
+// Отправка формы
+bookingForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    // Показываем индикатор загрузки
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    const originalBtnText = submitBtn.textContent;
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Отправка...';
-    
-    try {
-        // Получение данных формы
-        const executorSelect = document.getElementById('executor');
-        const executorId = executorSelect.value;
-        const executorName = executorSelect.options[executorSelect.selectedIndex].text;
-        
-        // Валидация данных
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const telegram = document.getElementById('telegram').value.trim();
-        const service = document.getElementById('service').value;
-        const description = document.getElementById('description').value.trim();
-        
-        // Проверка обязательных полей
-        if (!executorId || !name || !email || !phone || !service || !description) {
-            showMessage('❌ Заполните все обязательные поля!', 'error', 3000);
-            return;
-        }
-        
-        // Форматирование сообщения
-        const message = `
-🚀 <b>Новый заказ для ${executorName.split(' (')[0]}!</b>
+    const formData = {
+        executorId: executorIdInput.value,
+        executorName: executorNameInput.value,
+        clientName: document.getElementById('clientName').value,
+        clientPhone: document.getElementById('clientPhone').value,
+        serviceType: document.getElementById('serviceType').value,
+        notes: document.getElementById('bookingNotes').value
+    };
 
-👤 <b>Клиент:</b> ${name}
-📧 <b>Почта:</b> ${email}
-📱 <b>Телефон:</b> ${phone}
-✈️ <b>Telegram:</b> ${telegram}
-🛠️ <b>Услуга:</b> ${service}
-📝 <b>Описание:</b> 
-${description}
-⏱️ <i>${new Date().toLocaleString('ru-RU')}</i>
-        `;
-        
-        // Токен бота (учебный)
-        const botToken = '7871514395:AAEKXYC0n8rbfPaWmIuYjstEkf7psDgN1tQ';
-        
-        // Отправка сообщения через Telegram API
+    // Форматирование сообщения
+    const message = `
+        🚀 <b>Новая запись!</b>
+        👤 <b>Клиент:</b> ${formData.clientName}
+        📞 <b>Телефон:</b> ${formData.clientPhone}
+        🛠️ <b>Услуга:</b> ${formData.serviceType}
+        ${formData.executorName ? `👨‍🔧 <b>Мастер:</b> ${formData.executorName}` : ''}
+        ${formData.notes ? `📝 <b>Пожелания:</b>\n${formData.notes}` : ''}
+        ⏱️ <i>${new Date().toLocaleString('ru-RU')}</i>
+    `;
+
+    // Настройки бота
+    const botToken = 'ВАШ_ТОКЕН_БОТА';
+    const chatId = formData.executorId || 'ID_ОБЩЕЙ_ГРУППЫ'; // Отправка мастеру или в общий чат
+
+    try {
+        // Отправка в Telegram
         const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                chat_id: executorId,
+                chat_id: chatId,
                 text: message,
                 parse_mode: 'HTML'
             })
         });
-        
+
         const data = await response.json();
         
         if (data.ok) {
-            showMessage(`✅ Заявка отправлена ${executorName.split(' (')[0]}!`, 'success', 5000);
-            document.getElementById('feedbackForm').reset();
+            formMessage.textContent = '✅ Запрос успешно отправлен!';
+            formMessage.className = 'success';
             
-            // Закрыть веб-приложение, если открыто в Telegram
-            if (window.Telegram && Telegram.WebApp && Telegram.WebApp.close) {
-                setTimeout(() => Telegram.WebApp.close(), 2000);
-            }
+            // Автозакрытие через 2 секунды
+            setTimeout(() => {
+                closeModal();
+            }, 2000);
         } else {
-            throw new Error(data.description || 'Ошибка отправки сообщения');
+            formMessage.textContent = '❌ Ошибка: ' + (data.description || 'неизвестная ошибка');
+            formMessage.className = 'error';
         }
+
     } catch (error) {
         console.error('Ошибка:', error);
-        showMessage(`🚫 Ошибка: ${error.message || 'Попробуйте позже'}`, 'error', 5000);
-    } finally {
-        // Восстанавливаем кнопку
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalBtnText;
+        formMessage.textContent = '🚫 Ошибка соединения с сервером';
+        formMessage.className = 'error';
     }
 });
-
-// Функция для отображения сообщений
-function showMessage(text, className, timeout = 5000) {
-    const messageDiv = document.getElementById('message');
-    messageDiv.textContent = text;
-    messageDiv.className = className;
-    
-    if (timeout
