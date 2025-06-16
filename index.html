@@ -140,17 +140,6 @@
             <p>© 2023 Лучшие исполнители. Все права защищены.</p>
         </div>
     </footer>
-<div id="tgAlert" style="display:none; position:fixed; bottom:20px; right:20px; background:#0088cc; color:white; padding:15px; border-radius:10px; z-index:1000;">
-    <p>Для полного функционала откройте в Telegram!</p>
-    <a href="https://t.me/ваш_бот?start=webapp" style="color:white; text-decoration:underline;">Открыть через бота</a>
-    <button onclick="document.getElementById('tgAlert').style.display='none'" style="margin-left:10px; background:red; border:none; color:white; border-radius:3px;">×</button>
-</div>
-
-<script>
-// Показываем предупреждение, если не в Telegram
-if (!window.Telegram?.WebApp) {
-    document.getElementById('tgAlert').style.display = 'block';
-}
 </script>
     <script src="script.js"></script>
 </body>
