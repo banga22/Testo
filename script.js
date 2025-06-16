@@ -68,6 +68,20 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
             messageDiv.className = '';
         }, 5000);
     })
+        // Проверяем, что скрипт работает внутри Telegram
+    if (window.Telegram && Telegram.WebApp) {
+        const tgUser = Telegram.WebApp.initDataUnsafe.user;
+    
+    if (tgUser) {
+        // Автозаполнение полей данными из Telegram
+        document.getElementById('name').value = tgUser.first_name || '';
+        document.getElementById('telegram').value = `@${tgUser.username}` || '';
+        
+        // Можно добавить и другие данные, например:
+        // document.getElementById('email').value = `${tgUser.username}@telegram`;
+    }
+}
+        
     .catch(error => {
         console.error('Ошибка:', error);
         const messageDiv = document.getElementById('message');
