@@ -9,44 +9,24 @@ const executorNameInput = document.getElementById('selectedExecutorName');
 const telegramInput = document.getElementById('clientTelegram');
 const telegramSource = document.getElementById('telegramSource');
 
-// Проверяем, доступен ли объект Telegram.WebApp
+// Проверяем, открыто ли приложение через Telegram WebApp
 function initTelegramAuth() {
-    // Добавляем проверку на полную загрузку API
-    if (typeof Telegram !== 'undefined' && typeof Telegram.WebApp !== 'undefined') {
-        const user = Telegram.WebApp.initDataUnsafe?.user;
-        
-        if (user?.username) {
-            telegramInput.value = `@${user.username}`;
+    if (window.Telegram && Telegram.WebApp) {
+        const user = Telegram.WebApp.initDataUnsafe.user;
+        if (user) {
+            telegramInput.value = user.username ? `@${user.username}` : 'Не указан';
             telegramSource.textContent = 'Данные получены из Telegram';
             telegramSource.style.color = '#28a745';
-            telegramInput.readOnly = true;
             return true;
         }
     }
     
-    // Fallback для внешнего браузера
     telegramInput.readOnly = false;
     telegramInput.placeholder = "Введите ваш Telegram";
     telegramSource.textContent = 'Приложение открыто вне Telegram';
     telegramSource.style.color = '#dc3545';
     return false;
 }
-
-// Явная инициализация WebApp при загрузке
-document.addEventListener('DOMContentLoaded', () => {
-    // Проверяем, открыто ли приложение через Telegram
-    if (window.Telegram?.WebApp) {
-        // Обязательные команды для корректной работы
-        Telegram.WebApp.ready();
-        Telegram.WebApp.expand();
-        
-        // Проверяем данные пользователя
-        setTimeout(() => {
-            if (!initTelegramAuth()) {
-                console.warn("Telegram API загружен, но данные пользователя недоступны");
-            }
-        }, 300);
-    }
 
 // Открытие модального окна
 function openModal(executorId = '', executorName = '') {
