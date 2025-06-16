@@ -1,14 +1,8 @@
-/* Общие стили */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa;
     color: #333;
 }
 
@@ -16,257 +10,226 @@ body {
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 20px 0;
 }
 
-/* Шапка сайта */
 header {
     background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
     color: white;
     padding: 60px 0;
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
-header h1 {
-    font-size: 2.8rem;
-    margin-bottom: 15px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-header p {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-/* Секция с исполнителями */
 .executors {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
-    margin-bottom: 50px;
+    gap: 25px;
 }
 
 .executor-card {
     background: white;
     border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
 }
 
 .executor-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    transform: translateY(-5px);
 }
 
 .executor-header {
     display: flex;
     align-items: center;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #eee;
+    margin-bottom: 15px;
 }
 
 .executor-header img {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #fff;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-}
-
-.executor-info {
-    margin-left: 20px;
-}
-
-.executor-info h2 {
-    font-size: 1.4rem;
-    margin-bottom: 5px;
-    color: #2c3e50;
+    margin-right: 15px;
+    border: 3px solid #eee;
 }
 
 .rating {
-    display: flex;
-    align-items: center;
+    color: #ffc107;
+    margin: 5px 0;
 }
 
-.rating i {
-    color: #FFD700;
-    margin-right: 3px;
-    font-size: 0.9rem;
-}
-
-.rating span {
-    margin-left: 8px;
-    font-weight: bold;
-    color: #555;
-}
-
-.executor-description {
-    padding: 20px;
-    font-size: 1rem;
-    color: #555;
-    line-height: 1.6;
-}
-
-.btn-details {
-    display: block;
-    width: calc(100% - 40px);
-    margin: 0 20px 20px;
-    padding: 12px 20px;
-    background: linear-gradient(to right, #6a11cb, #2575fc);
+.btn-book {
+    background: #28a745;
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    width: 100%;
+    font-weight: bold;
+    transition: background 0.3s;
 }
 
-.btn-details:hover {
-    background: linear-gradient(to right, #2575fc, #6a11cb);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(37, 117, 252, 0.3);
-}
-
-/* Подвал сайта */
-footer {
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    text-align: center;
-    padding: 25px 0;
-    margin-top: 40px;
-}
-
-footer p {
-    font-size: 0.9rem;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    .executors {
-        grid-template-columns: 1fr;
-    }
-    
-    header h1 {
-        font-size: 2.2rem;
-    }
-    
-    .executor-header {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .executor-info {
-        margin-left: 0;
-        margin-top: 15px;
-    }
-}
-
-/* Добавьте в конец файла style.css */
-.order-section {
-    text-align: center;
-    margin: 50px 0;
-    padding: 30px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-}
-
-.order-section h2 {
-    margin-bottom: 20px;
-    color: #2c3e50;
-}
-
-.order-btn {
-    display: inline-block;
-    padding: 15px 30px;
-    background: linear-gradient(to right, #6a11cb, #2575fc);
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(37, 117, 252, 0.3);
-}
-
-.order-btn:hover {
-    background: linear-gradient(to right, #2575fc, #6a11cb);
-    transform: translateY(-3px);
-    box-shadow: 0 7px 20px rgba(37, 117, 252, 0.4);
+.btn-book:hover {
+    background: #218838;
 }
 
 /* Модальное окно */
 .modal {
     display: none;
     position: fixed;
-    z-index: 1000;
+    z-index: 100;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
     background-color: rgba(0,0,0,0.5);
     backdrop-filter: blur(5px);
 }
 
 .modal-content {
-    position: relative;
     background-color: #fff;
     margin: 10% auto;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+    padding: 25px;
+    border-radius: 10px;
     width: 90%;
     max-width: 500px;
+    position: relative;
     animation: modalOpen 0.4s;
 }
 
 @keyframes modalOpen {
-    from {opacity: 0; transform: translateY(-60px);}
-    to {opacity: 1; transform: translateY(0);}
+    from { opacity: 0; transform: translateY(-50px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.close-btn {
+.close {
     position: absolute;
-    top: 15px;
     right: 20px;
+    top: 10px;
     font-size: 28px;
     font-weight: bold;
-    color: #aaa;
     cursor: pointer;
-    transition: 0.3s;
+    color: #aaa;
 }
 
-.close-btn:hover {
+.close:hover {
     color: #333;
 }
 
-/* Адаптивность модалки */
-@media (max-width: 768px) {
-    .modal-content {
-        margin: 5% auto;
-        width: 95%;
-    }
+.form-group {
+    margin-bottom: 20px;
 }
 
-/* Добавьте в конец файла */
-
-/* Стили для поля Telegram */
-#telegramSource {
+.form-group label {
     display: block;
-    font-size: 0.8rem;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #6a11cb;
+    box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.2);
+}
+
+button[type="submit"] {
+    background: #6a11cb;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s;
+}
+
+button[type="submit"]:hover {
+    background: #5a0db3;
+}
+
+#formMessage {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.tg-source {
+    display: block;
+    font-size: 0.8em;
     margin-top: 5px;
     font-style: italic;
 }
 
-/* Иконка подтверждения */
-.telegram-verified {
+.tg-verified {
     color: #28a745;
-    margin-left: 5px;
+}
+
+.tg-external {
+    color: #dc3545;
+}
+
+.tg-alert {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #0088cc;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    z-index: 1000;
+    max-width: 300px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+.tg-alert-btn {
+    color: white;
+    text-decoration: underline;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.tg-alert-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .executors {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        margin: 20% auto;
+    }
 }
