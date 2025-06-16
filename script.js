@@ -19,21 +19,22 @@ document.addEventListener('DOMContentLoaded', function() {
             if (tgUser.username) {
                 telegramField.value = `@${tgUser.username}`;
             } else {
-                // Если username отсутствует, показываем инструкцию
-                telegramField.placeholder = 'У вас нет @username. Введите контакт вручную';
-                telegramField.readOnly = false;
-                showMessage('❌ У вас не установлен username в Telegram. Пожалуйста, укажите контакт вручную.', 'error', 5000);
+                // Если username отсутствует, используем user ID
+                telegramField.value = `user_${tgUser.id}`;
             }
         } else {
             // Если данные пользователя недоступны
-            telegramField.readOnly = false;
-            telegramField.placeholder = 'Введите ваш @username или телефон';
-            showMessage('⚠️ Не удалось получить данные Telegram. Заполните поле вручную.', 'error', 5000);
+            telegramField.value = "Не удалось получить данные";
         }
+        
+        // Делаем поле нередактируемым и меняем стиль
+        telegramField.readOnly = true;
+        telegramField.classList.add('telegram-auto');
     } else {
         // Если открыто в обычном браузере
-        telegramField.readOnly = false;
-        telegramField.placeholder = 'Ваш @username в Telegram';
+        telegramField.value = "Откройте в Telegram";
+        telegramField.readOnly = true;
+        telegramField.classList.add('telegram-auto');
     }
 });
 
@@ -56,19 +57,14 @@ document.getElementById('feedbackForm').addEventListener('submit', async functio
         const name = document.getElementById('name').value.trim();
         const email = document.getElementById('email').value.trim();
         const phone = document.getElementById('phone').value.trim();
-        let telegram = document.getElementById('telegram').value.trim();
+        const telegram = document.getElementById('telegram').value.trim();
         const service = document.getElementById('service').value;
         const description = document.getElementById('description').value.trim();
         
         // Проверка обязательных полей
-        if (!executorId || !name || !email || !phone || !telegram || !service || !description) {
+        if (!executorId || !name || !email || !phone || !service || !description) {
             showMessage('❌ Заполните все обязательные поля!', 'error', 3000);
             return;
-        }
-        
-        // Нормализация Telegram username
-        if (!telegram.startsWith('@') && !telegram.startsWith('+')) {
-            telegram = '@' + telegram;
         }
         
         // Форматирование сообщения
@@ -130,10 +126,4 @@ function showMessage(text, className, timeout = 5000) {
     messageDiv.textContent = text;
     messageDiv.className = className;
     
-    if (timeout > 0) {
-        setTimeout(() => {
-            messageDiv.textContent = '';
-            messageDiv.className = '';
-        }, timeout);
-    }
-}
+    if (timeout
