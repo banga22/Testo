@@ -48,6 +48,76 @@
         </div>
     </main>
 
+    <!-- Главный контент -->
+    <main class="container">
+        <section class="executors">
+            <!-- Алексей Иванов -->
+            <div class="executor-card">
+                <div class="executor-header">
+                    <img src="https://via.placeholder.com/100" alt="Алексей Иванов">
+                    <div class="executor-info">
+                        <h2>Алексей Иванов</h2>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.8</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="executor-description">Специалист по 3D моделированию с 7-летним опытом. Работал над проектами для крупных игровых студий.</p>
+                <button class="btn-details" data-executor-id="1257092596" data-executor-name="Алексей Иванов">Записаться</button>
+            </div>
+            
+            <!-- Мария Петрова -->
+            <div class="executor-card">
+                <div class="executor-header">
+                    <img src="https://via.placeholder.com/100" alt="Мария Петрова">
+                    <div class="executor-info">
+                        <h2>Мария Петрова</h2>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>5.0</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="executor-description">Эксперт по текстурированию и материаловедению. Создаю реалистичные текстуры для любых объектов.</p>
+                <button class="btn-details" data-executor-id="1106493429" data-executor-name="Мария Петрова">Записаться</button>
+            </div>
+            
+            <!-- Новый исполнитель: Дмитрий Сидоров -->
+            <div class="executor-card">
+                <div class="executor-header">
+                    <img src="https://via.placeholder.com/100" alt="Дмитрий Сидоров">
+                    <div class="executor-info">
+                        <h2>Дмитрий Сидоров</h2>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>4.2</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="executor-description">Профессионал в области ретопологии и оптимизации 3D моделей. Специализируюсь на подготовке моделей для игр.</p>
+                <button class="btn-details" data-executor-id="5555555555" data-executor-name="Дмитрий Сидоров">Записаться</button>
+            </div>
+        </section>
+        
+        <!-- Кнопка вызова формы -->
+        <div class="order-section">
+            <button id="openFormBtn" class="order-btn">Записаться к мастеру</button>
+        </div>
+    </main>
+
     <!-- Модальное окно формы -->
     <div id="bookingModal" class="modal">
         <div class="modal-content">
@@ -68,12 +138,20 @@
                 </div>
                 
                 <div class="form-group">
+                    <label for="clientTelegram">Telegram:</label>
+                    <input type="text" id="clientTelegram" placeholder="Определится автоматически" readonly>
+                    <small id="telegramSource"></small>
+                </div>
+                
+                <div class="form-group">
                     <label for="serviceType">Услуга:</label>
                     <select id="serviceType" required>
                         <option value="">Выберите услугу</option>
                         <option value="Создание модели">Создание модели</option>
                         <option value="Текстурирование">Текстурирование</option>
                         <option value="Ретопология">Ретопология</option>
+                        <option value="Анимация">Анимация</option>
+                        <option value="Оптимизация">Оптимизация</option>
                     </select>
                 </div>
                 
