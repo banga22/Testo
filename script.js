@@ -1,138 +1,80 @@
-// Элементы DOM
-const modal = document.getElementById('bookingModal');
-const openFormBtn = document.getElementById('openFormBtn');
-const closeBtn = document.querySelector('.close-btn');
-const bookingForm = document.getElementById('bookingForm');
-const formMessage = document.getElementById('formMessage');
-const executorIdInput = document.getElementById('selectedExecutorId');
-const executorNameInput = document.getElementById('selectedExecutorName');
-const telegramInput = document.getElementById('clientTelegram');
-const telegramSource = document.getElementById('telegramSource');
-
-// Проверяем, открыто ли приложение через Telegram WebApp
-function initTelegramAuth() {
-    if (window.Telegram && Telegram.WebApp) {
-        const user = Telegram.WebApp.initDataUnsafe.user;
-        if (user) {
-            telegramInput.value = user.username ? `@${user.username}` : 'Не указан';
-            telegramSource.textContent = 'Данные получены из Telegram';
-            telegramSource.style.color = '#28a745';
-            return true;
-        }
-    }
-    
-    telegramInput.readOnly = false;
-    telegramInput.placeholder = "Введите ваш Telegram";
-    telegramSource.textContent = 'Приложение открыто вне Telegram';
-    telegramSource.style.color = '#dc3545';
-    return false;
-}
-
-// Открытие модального окна
-function openModal(executorId = '', executorName = '') {
-    executorIdInput.value = executorId;
-    executorNameInput.value = executorName;
-    modal.style.display = "block";
-    document.body.style.overflow = "hidden";
-    
-    // Инициализируем данные Telegram
-    initTelegramAuth();
-}
-
-// Закрытие модального окна
-function closeModal() {
-    modal.style.display = "none";
-    document.body.style.overflow = "auto";
-    bookingForm.reset();
-    formMessage.textContent = '';
-    telegramSource.textContent = '';
-}
-
-// Обработчики событий
-openFormBtn.addEventListener('click', () => openModal());
-closeBtn.addEventListener('click', closeModal);
-window.addEventListener('click', (e) => e.target === modal && closeModal());
-
-// Обработка кнопок "Записаться" в карточках
-document.querySelectorAll('.btn-details').forEach(button => {
-    button.addEventListener('click', () => {
-        const executorId = button.getAttribute('data-executor-id');
-        const executorName = button.getAttribute('data-executor-name');
-        openModal(executorId, executorName);
-    });
-});
-
-// Отправка формы
-bookingForm.addEventListener('submit', async (e) => {
+document.getElementById('feedbackForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    // Собираем данные формы
+    // Получаем выбранного исполнителя
+    const executorSelect = document.getElementById('executor');
+    const executorId = executorSelect.value;
+    const executorName = executorSelect.options[executorSelect.selectedIndex].text;
+    
+    // Сбор данных формы
     const formData = {
-        executorId: executorIdInput.value,
-        executorName: executorNameInput.value,
-        clientName: document.getElementById('clientName').value,
-        clientPhone: document.getElementById('clientPhone').value,
-        clientTelegram: telegramInput.value,
-        serviceType: document.getElementById('serviceType').value,
-        notes: document.getElementById('bookingNotes').value
+        executor: executorName,
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        telegram: document.getElementById('telegram').value,
+        service: document.getElementById('service').value,
+        description: document.getElementById('description').value
     };
-
+    
+    // Проверка Telegram аккаунта
+    if (!formData.telegram.startsWith('@')) {
+        formData.telegram = '@' + formData.telegram;
+    }
+    
     // Форматирование сообщения для Telegram
     const message = `
-        🚀 <b>НОВАЯ ЗАПИСЬ!</b>
-        👤 <b>Клиент:</b> ${formData.clientName}
-        📱 <b>Телефон:</b> ${formData.clientPhone}
-        ✈️ <b>Telegram:</b> ${formData.clientTelegram}
-        🛠️ <b>Услуга:</b> ${formData.serviceType}
-        ${formData.executorName ? `👨‍🔧 <b>Мастер:</b> ${formData.executorName}` : ''}
-        ${formData.notes ? `📝 <b>Пожелания:</b>\n${formData.notes}` : ''}
+        🚀 <b>Новый заказ для ${formData.executor.split(' (')[0]}!</b>
+        
+        👤 <b>Клиент:</b> ${formData.name}
+        📧 <b>Почта:</b> ${formData.email}
+        📱 <b>Телефон:</b> ${formData.phone}
+        ✈️ <b>Telegram:</b> ${formData.telegram}
+        
+        🛠️ <b>Услуга:</b> ${formData.service}
+        📝 <b>Описание:</b>
+        ${formData.description}
+        
         ⏱️ <i>${new Date().toLocaleString('ru-RU')}</i>
     `;
-
-    // Настройки бота (ЗАМЕНИТЕ НА СВОИ!)
+    
+    // Настройки бота Telegram
     const botToken = '7871514395:AAEKXYC0n8rbfPaWmIuYjstEkf7psDgN1tQ';
-    const chatId = formData.executorId || '1257092596'; // Отправляем выбранному мастеру
-
-    try {
-        // Отправка в Telegram
-        const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: message,
-                parse_mode: 'HTML'
-            })
-        });
-
-        const data = await response.json();
-        
+    
+    // Отправка данных через Telegram API выбранному исполнителю
+    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            chat_id: executorId,
+            text: message,
+            parse_mode: 'HTML'
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const messageDiv = document.getElementById('message');
         if (data.ok) {
-            formMessage.textContent = '✅ Запрос успешно отправлен мастеру!';
-            formMessage.className = 'success';
-            
-            // Автозакрытие через 2 секунды
-            setTimeout(closeModal, 2000);
+            messageDiv.textContent = `✅ Заявка отправлена ${formData.executor.split(' (')[0]}!`;
+            messageDiv.className = 'success';
+            document.getElementById('feedbackForm').reset();
         } else {
-            formMessage.textContent = `❌ Ошибка отправки: ${data.description || 'неизвестная ошибка'}`;
-            formMessage.className = 'error';
+            messageDiv.textContent = '❌ Ошибка отправки: ' + data.description;
+            messageDiv.className = 'error';
         }
-
-    } catch (error) {
-        console.error('Ошибка сети:', error);
-        formMessage.textContent = '🚫 Ошибка соединения с сервером';
-        formMessage.className = 'error';
-    }
-});
-
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', () => {
-    // Проверяем, открыто ли приложение через Telegram
-    if (window.Telegram && Telegram.WebApp) {
-        Telegram.WebApp.ready();
-        Telegram.WebApp.expand();
         
-        // Скрываем стандартную кнопку Telegram
-        Telegram.WebApp.MainButton.hide();
-    }
+        // Автоскрытие сообщения через 5 секунд
+        setTimeout(() => {
+            messageDiv.textContent = '';
+            messageDiv.className = '';
+        }, 5000);
+    })
+    .catch(error => {
+        console.error('Ошибка:', error);
+        const messageDiv = document.getElementById('message');
+        messageDiv.textContent = '🚫 Произошла ошибка при отправке заявки';
+        messageDiv.className = 'error';
+    });
 });
