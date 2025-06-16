@@ -68,8 +68,8 @@ bookingForm.addEventListener('submit', async (e) => {
     `;
 
     // Настройки бота
-    const botToken = 'ВАШ_ТОКЕН_БОТА';
-    const chatId = formData.executorId || 'ID_ОБЩЕЙ_ГРУППЫ'; // Отправка мастеру или в общий чат
+    const botToken = '7871514395:AAEKXYC0n8rbfPaWmIuYjstEkf7psDgN1tQ';
+    const chatId = formData.executorId || '1257092596'; // Отправка мастеру или в общий чат
 
     try {
         // Отправка в Telegram
