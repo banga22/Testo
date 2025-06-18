@@ -2,14 +2,14 @@
 const executorsData = {
     1: {
         name: "Алексей Иванов",
-        img: "https://via.placeholder.com/200",
+        img: "1.png.png",
         rating: '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><span> 4.8</span>',
         description: "Специалист по 3D моделированию с 7-летним опытом. Работал над проектами для крупных игровых студий. Создаю высокополигональные и низкополигональные модели, оптимизированные для различных платформ.",
         gallery: [
-            "https://via.placeholder.com/400x300/1abc9c/ffffff?text=Работа+1",
-            "https://via.placeholder.com/400x300/3498db/ffffff?text=Работа+2",
-            "https://via.placeholder.com/400x300/9b59b6/ffffff?text=Работа+3",
-            "https://via.placeholder.com/400x300/e74c3c/ffffff?text=Работа+4"
+            "/images/1.jpg",
+            "/images/2.jpg",
+            "/images/3.jpg",
+            "/images/4.jpg"
         ]
     },
     2: {
