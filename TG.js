@@ -6,10 +6,10 @@ const executorsData = {
         rating: '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><span> 4.8</span>',
         description: "Специалист по 3D моделированию с 7-летним опытом. Работал над проектами для крупных игровых студий. Создаю высокополигональные и низкополигональные модели, оптимизированные для различных платформ.",
         gallery: [
-            "./images/1.jpg",
-            "./images/2.jpg",
-            "./images/3.jpg",
-            "./images/4.jpg"
+            "./Images/1.jpg",
+            "./Images/2.jpg",
+            "./Images/3.jpg",
+            "./Images/4.jpg"
         ]
     },
     2: {
